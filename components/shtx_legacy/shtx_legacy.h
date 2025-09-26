@@ -1,6 +1,4 @@
-#ifndef SHTX_LEGACY_H
-#define SHTX_LEGACY_H
-
+#pragma once
 #include "esphome.h"
 
 namespace esphome {
@@ -8,18 +6,17 @@ namespace shtx_legacy {
 
 class SHTxLegacy : public PollingComponent, public Sensor {
  public:
-  SHTxLegacy() : PollingComponent(60000) {}  // Update cada 60s
+  SHTxLegacy() : PollingComponent(60000) {}   // lee cada 60 s
   void setup() override;
   void update() override;
-  float get_temperature() const { return temperature; }
-  float get_humidity() const { return humidity; }
+
+  void set_temperature_sensor(Sensor *s) { temperature_sensor_ = s; }
+  void set_humidity_sensor  (Sensor *s) { humidity_sensor_   = s; }
 
  private:
-  float temperature = NAN;
-  float humidity = NAN;
+  Sensor *temperature_sensor_{nullptr};
+  Sensor *humidity_sensor_{nullptr};
 };
 
 }  // namespace shtx_legacy
 }  // namespace esphome
-
-#endif

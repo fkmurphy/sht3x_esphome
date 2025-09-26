@@ -6,34 +6,23 @@
 namespace esphome {
 namespace shtx_legacy {
 
-static const char *TAG = "shtx_legacy.sensor";
-
-Adafruit_SHT31 sht31;
+static const char *TAG = "shtx_legacy";
+static Adafruit_SHT31 sht31;
 
 void SHTxLegacy::setup() {
-  ESP_LOGCONFIG(TAG, "Setting up SHTx Legacy Sensor");
-  Wire.begin(21, 22);  // SDA 21, SCL 22
+  ESP_LOGCONFIG(TAG, "Initializing SHT31…");
+  Wire.begin(21, 22);
   if (!sht31.begin(0x44)) {
-    ESP_LOGE(TAG, "Failed to find SHT31 sensor");
-    this->mark_failed();
+    ESP_LOGE(TAG, "Sensor no encontrado");
+    mark_failed();
   }
 }
 
 void SHTxLegacy::update() {
-  temperature = sht31.readTemperature();
-  humidity = sht31.readHumidity();
-
-  if (!isnan(temperature)) {
-    publish_state(temperature);  // Publica temperatura
-  } else {
-    ESP_LOGE(TAG, "Temperature read failed");
-  }
-
-  if (!isnan(humidity)) {
-    publish_state(humidity);  // Publica humedad
-  } else {
-    ESP_LOGE(TAG, "Humidity read failed");
-  }
+  float t = sht31.readTemperature();
+  float h = sht31.readHumidity();
+  if (!isnan(t) && temperature_sensor_) temperature_sensor_->publish_state(t);
+  if (!isnan(h) && humidity_sensor_)    humidity_sensor_->publish_state(h);
 }
 
 }  // namespace shtx_legacy
