@@ -1,0 +1,43 @@
+#include "shtx_legacy.h"
+#include "esphome/core/log.h"
+#include <Wire.h>
+#include "Adafruit_SHT31.h"
+
+namespace esphome {
+namespace shtx_legacy {
+
+static const char *TAG = "shtx_legacy.sensor";
+
+Adafruit_SHT31 sht31;
+
+void SHTxLegacy::setup() {
+  ESP_LOGCONFIG(TAG, "Setting up SHTx Legacy Sensor");
+  Wire.begin(21, 22);  // SDA 21, SCL 22
+  if (!sht31.begin(0x44)) {
+    ESP_LOGE(TAG, "Failed to find SHT31 sensor");
+    this->mark_failed();
+  }
+}
+
+void SHTxLegacy::update() {
+  temperature = sht31.readTemperature();
+  humidity = sht31.readHumidity();
+
+  if (!isnan(temperature)) {
+    publish_state(temperature);  // Publica temperatura
+  } else {
+    ESP_LOGE(TAG, "Temperature read failed");
+  }
+
+  if (!isnan(humidity)) {
+    publish_state(humidity);  // Publica humedad
+  } else {
+    ESP_LOGE(TAG, "Humidity read failed");
+  }
+}
+
+float SHTxLegacy::get_temperature() const { return temperature; }
+float SHTxLegacy::get_humidity() const { return humidity; }
+
+}  // namespace shtx_legacy
+}  // namespace esphome

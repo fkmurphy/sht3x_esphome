@@ -1,0 +1,6 @@
+{
+  "domain": "shtx_legacy",
+  "name": "SHTx Legacy Sensor",
+  "version": "1.0.0",
+  "codeowners": ["@tu_usuario"]
+}
