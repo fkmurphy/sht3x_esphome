@@ -36,8 +36,5 @@ void SHTxLegacy::update() {
   }
 }
 
-float SHTxLegacy::get_temperature() const { return temperature; }
-float SHTxLegacy::get_humidity() const { return humidity; }
-
 }  // namespace shtx_legacy
 }  // namespace esphome

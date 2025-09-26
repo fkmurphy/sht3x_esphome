@@ -11,8 +11,8 @@ class SHTxLegacy : public PollingComponent, public Sensor {
   SHTxLegacy() : PollingComponent(60000) {}  // Update cada 60s
   void setup() override;
   void update() override;
-  float get_temperature() const;
-  float get_humidity() const;
+  float get_temperature() const { return temperature; }
+  float get_humidity() const { return humidity; }
 
  private:
   float temperature = NAN;
