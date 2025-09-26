@@ -9,7 +9,7 @@ namespace shtx_legacy {
 static const char *TAG = "shtx_legacy";
 static Adafruit_SHT31 sht31;
 
-void SHTxLegacy::setup() {
+void Shtxlegacy::setup() {
   ESP_LOGCONFIG(TAG, "Initializing SHT31…");
   Wire.begin(21, 22);
   if (!sht31.begin(0x44)) {
@@ -18,7 +18,7 @@ void SHTxLegacy::setup() {
   }
 }
 
-void SHTxLegacy::update() {
+void Shtxlegacy::update() {
   float t = sht31.readTemperature();
   float h = sht31.readHumidity();
   if (!isnan(t) && temperature_sensor_) temperature_sensor_->publish_state(t);

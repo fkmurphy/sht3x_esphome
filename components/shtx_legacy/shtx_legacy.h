@@ -4,9 +4,9 @@
 namespace esphome {
 namespace shtx_legacy {
 
-class SHTxLegacy : public PollingComponent, public Sensor {
+class Shtxlegacy : public PollingComponent, public Sensor {
  public:
-  SHTxLegacy() : PollingComponent(60000) {}   // lee cada 60 s
+  Shtxlegacy() : PollingComponent(60000) {}   // lee cada 60 s
   void setup() override;
   void update() override;
 

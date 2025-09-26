@@ -4,7 +4,7 @@ from esphome.components import sensor
 from esphome.const import CONF_ID, CONF_TEMPERATURE, CONF_HUMIDITY
 
 ns = cg.esphome_ns.namespace("shtx_legacy")
-SHTxLegacy = ns.class_("SHTxLegacy", cg.PollingComponent, sensor.Sensor)
+SHTxLegacy = ns.class_("Shtxlegacy", cg.PollingComponent, sensor.Sensor)
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SHTxLegacy),
@@ -12,7 +12,7 @@ CONFIG_SCHEMA = cv.Schema({
     cv.Optional(CONF_HUMIDITY): sensor.sensor_schema(),
 }).extend(cv.polling_component_schema("60s"))
 
-def to_code(cfg):
+async def to_code(cfg):
     var = cg.new_Pvariable(cfg[CONF_ID])
     yield cg.register_component(var, cfg)
     if CONF_TEMPERATURE in cfg:
